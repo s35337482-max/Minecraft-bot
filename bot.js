@@ -1,17 +1,18 @@
 const mineflayer = require('mineflayer')
 
-function createBot(){
+function createBot() {
 
 const bot = mineflayer.createBot({
-  host: 'endless1.aternos.me',
+  host: "endless1.aternos.me",
   port: 24408,
-  username: 'JumpBot'
+  username: "AFK_Bot",
+  version: false
 })
 
 bot.on('spawn', () => {
-  console.log("Bot joined server")
+  console.log("Bot joined the server")
 
-  // auto jump every 3 seconds
+  // Auto Jump
   setInterval(() => {
     bot.setControlState('jump', true)
 
@@ -19,16 +20,18 @@ bot.on('spawn', () => {
       bot.setControlState('jump', false)
     }, 500)
 
-  }, 3000)
+  }, 5000)
 
 })
 
 bot.on('end', () => {
-  console.log("Reconnecting...")
+  console.log("Bot disconnected, reconnecting...")
   setTimeout(createBot, 5000)
 })
 
-bot.on('error', console.log)
+bot.on('error', (err) => {
+  console.log("Error:", err)
+})
 
 }
 
